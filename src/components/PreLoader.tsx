@@ -19,93 +19,62 @@ const PreLoader: React.FC<PreLoaderProps> = ({ onComplete }) => {
 
       if (!container || !spans.length || !preloader || !scrollingContainer) return;
 
-      // Set initial hardware acceleration
-      preloader.style.willChange = 'transform';
-      container.style.willChange = 'opacity, transform';
-      scrollingContainer.style.willChange = 'opacity';
-      spans.forEach(span => {
-        span.style.willChange = 'opacity, transform';
-      });
-
-      // Phase 1: Show container (immediate)
-      requestAnimationFrame(() => {
+      // Phase 1: Show container
+      setTimeout(() => {
         setAnimationPhase('showing');
-        container.style.opacity = '1';
-        container.style.transform = 'translateY(0)';
-      });
+        container.classList.add('visible');
+      }, 200);
 
       // Phase 2: Animate spans with stagger
       spans.forEach((span, index) => {
         setTimeout(() => {
-          requestAnimationFrame(() => {
-            span.style.opacity = '1';
-            span.style.transform = 'translateY(0)';
-          });
-        }, 500 + (index * 120)); // Slower stagger for longer effect
+          span.classList.add('visible');
+        }, 600 + (index * 100));
       });
 
-      // Phase 3: Show scrolling text after main text appears
+      // Phase 3: Show scrolling text
       setTimeout(() => {
         setAnimationPhase('scrolling');
-        requestAnimationFrame(() => {
-          scrollingContainer.style.opacity = '1';
-        });
-      }, 2000);
+        scrollingContainer.classList.add('visible');
+      }, 1500);
 
-      // Phase 4: Hold with scrolling animation
+      // Phase 4: Hold animation
       setTimeout(() => {
         setAnimationPhase('holding');
-      }, 2200);
+      }, 1700);
 
-      // Phase 5: Hide scrolling text first
+      // Phase 5: Hide scrolling text
       setTimeout(() => {
-        requestAnimationFrame(() => {
-          scrollingContainer.style.opacity = '0';
-        });
-      }, 5000);
+        scrollingContainer.classList.remove('visible');
+      }, 4000);
 
       // Phase 6: Hide main text
       setTimeout(() => {
         setAnimationPhase('hiding');
-        requestAnimationFrame(() => {
-          container.style.opacity = '0';
-          container.style.transform = 'translateY(-20px)';
-        });
-      }, 5500);
+        container.classList.add('hiding');
+      }, 4300);
 
       // Phase 7: Slide up preloader
       setTimeout(() => {
-        requestAnimationFrame(() => {
-          preloader.style.transform = 'translateY(-100%)';
-        });
-      }, 6000);
+        preloader.classList.add('sliding-up');
+      }, 4800);
 
-      // Phase 8: Complete and cleanup
+      // Phase 8: Complete
       setTimeout(() => {
         setAnimationPhase('complete');
-        // Clean up performance optimizations
-        preloader.style.willChange = 'auto';
-        container.style.willChange = 'auto';
-        scrollingContainer.style.willChange = 'auto';
-        spans.forEach(span => {
-          span.style.willChange = 'auto';
-        });
-        
         document.body.style.overflow = 'auto';
         document.body.style.overflowY = 'scroll';
         
         if (onComplete) {
           onComplete();
         }
-      }, 6500);
+      }, 5300);
     };
 
-    // Small delay to ensure DOM is ready
     const timer = setTimeout(runAnimation, 100);
     
     return () => {
       clearTimeout(timer);
-      // Cleanup on unmount
       document.body.style.overflow = 'auto';
     };
   }, [onComplete]);
@@ -130,7 +99,7 @@ const PreLoader: React.FC<PreLoaderProps> = ({ onComplete }) => {
               <span>Creating Interactive Solutions</span>
               <span>❤️</span>
               <span>Innovating with Technology</span>
-              <span></span>
+              <span>❤️</span>
             </div>
           </div>
         </div>
@@ -148,57 +117,81 @@ const PreLoader: React.FC<PreLoaderProps> = ({ onComplete }) => {
           display: flex;
           justify-content: center;
           align-items: center;
-          backface-visibility: hidden;
-          transform: translateZ(0);
-          transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+          transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .preloader-wrapper.sliding-up {
+          transform: translateY(-100%);
         }
 
         .preloader-content {
           display: flex;
           flex-direction: column;
           align-items: center;
-          gap: 40px;
+          gap: 20px;
+          padding: 0 20px;
         }
 
         .preloader-texts {
           display: flex;
           align-items: center;
-          gap: 8px;
+          gap: 4px;
           color: #ffffff;
-          font-size: 24px;
+          font-size: 18px;
           font-weight: 600;
           opacity: 0;
-          transform: translateY(30px);
-          transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
-          backface-visibility: hidden;
+          transform: translateY(20px);
+          transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          flex-wrap: wrap;
+          justify-content: center;
+          text-align: center;
+        }
+
+        .preloader-texts.visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        .preloader-texts.hiding {
+          opacity: 0;
+          transform: translateY(-20px);
         }
 
         .preloader-texts span {
           opacity: 0;
-          transform: translateY(30px);
-          transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-          backface-visibility: hidden;
+          transform: translateY(20px);
+          transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           display: inline-block;
         }
 
+        .preloader-texts span.visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
         .scrolling-text-container {
-          width: 400px;
-          height: 30px;
+          width: 100%;
+          max-width: 300px;
+          height: 25px;
           overflow: hidden;
           opacity: 0;
-          transition: opacity 0.6s ease-in-out;
+          transition: opacity 0.4s ease-in-out;
           position: relative;
+        }
+
+        .scrolling-text-container.visible {
+          opacity: 1;
         }
 
         .scrolling-text {
           display: flex;
           align-items: center;
-          gap: 20px;
+          gap: 15px;
           color: #888888;
-          font-size: 14px;
+          font-size: 12px;
           font-weight: 400;
           white-space: nowrap;
-          animation: scroll-horizontal 8s linear infinite;
+          animation: scroll-horizontal 6s linear infinite;
           position: absolute;
           top: 50%;
           transform: translateY(-50%);
@@ -218,46 +211,106 @@ const PreLoader: React.FC<PreLoaderProps> = ({ onComplete }) => {
           }
         }
 
-        /* Media queries for responsive design */
+        /* Mobile optimizations */
         @media (max-width: 768px) {
           .preloader-texts {
-            font-size: 20px;
-            gap: 6px;
+            font-size: 16px;
+            gap: 3px;
           }
           
           .scrolling-text-container {
-            width: 300px;
+            max-width: 250px;
+            height: 22px;
           }
           
           .scrolling-text {
-            font-size: 12px;
+            font-size: 11px;
+            gap: 12px;
+          }
+
+          .preloader-content {
+            gap: 15px;
           }
         }
 
         @media (max-width: 480px) {
           .preloader-texts {
-            font-size: 18px;
-            gap: 4px;
+            font-size: 14px;
+            gap: 2px;
           }
           
           .scrolling-text-container {
-            width: 250px;
-            height: 25px;
+            max-width: 200px;
+            height: 20px;
           }
           
           .scrolling-text {
-            font-size: 11px;
-            gap: 15px;
+            font-size: 10px;
+            gap: 10px;
+          }
+
+          .preloader-content {
+            gap: 12px;
           }
         }
 
-        /* High performance animations */
-        .preloader-wrapper,
-        .preloader-texts,
-        .preloader-texts span,
-        .scrolling-text {
-          transform-style: preserve-3d;
-          perspective: 1000px;
+        /* Very small screens */
+        @media (max-width: 320px) {
+          .preloader-texts {
+            font-size: 12px;
+            gap: 2px;
+          }
+          
+          .scrolling-text-container {
+            max-width: 180px;
+            height: 18px;
+          }
+          
+          .scrolling-text {
+            font-size: 9px;
+            gap: 8px;
+          }
+        }
+
+        /* Larger screens */
+        @media (min-width: 769px) {
+          .preloader-texts {
+            font-size: 24px;
+            gap: 8px;
+          }
+          
+          .scrolling-text-container {
+            max-width: 400px;
+            height: 30px;
+          }
+          
+          .scrolling-text {
+            font-size: 14px;
+            gap: 20px;
+          }
+
+          .preloader-content {
+            gap: 40px;
+          }
+        }
+
+        /* Reduce motion for users who prefer it */
+        @media (prefers-reduced-motion: reduce) {
+          .preloader-texts,
+          .preloader-texts span,
+          .scrolling-text-container,
+          .preloader-wrapper {
+            transition-duration: 0.2s;
+          }
+          
+          @keyframes scroll-horizontal {
+            0% {
+              transform: translateY(-50%) translateX(50%);
+            }
+            100% {
+              transform: translateY(-50%) translateX(-50%);
+            }
+          }
         }
       `}</style>
     </>
