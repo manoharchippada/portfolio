@@ -47,7 +47,7 @@ const Projects: React.FC = () => {
     }
   ];
 
-  // Optimized animation variants with better performance
+  // Simplified animations for better performance
   const containerVariants = {
     hidden: { 
       opacity: 0
@@ -55,9 +55,7 @@ const Projects: React.FC = () => {
     visible: {
       opacity: 1,
       transition: {
-        duration: 0.6,
-        ease: [0.25, 0.46, 0.45, 0.94],
-        delayChildren: 0.2,
+        duration: 0.4,
         staggerChildren: 0.1
       }
     }
@@ -65,17 +63,15 @@ const Projects: React.FC = () => {
 
   const itemVariants = {
     hidden: { 
-      y: 40, 
-      opacity: 0,
-      scale: 0.9
+      y: 30, 
+      opacity: 0
     },
     visible: {
       y: 0,
       opacity: 1,
-      scale: 1,
       transition: {
-        duration: 0.5,
-        ease: [0.25, 0.46, 0.45, 0.94]
+        duration: 0.4,
+        ease: "easeOut"
       }
     }
   };
@@ -83,146 +79,76 @@ const Projects: React.FC = () => {
   const cardVariants = {
     rest: { 
       scale: 1,
-      y: 0,
+      y: 0
+    },
+    hover: { 
+      scale: 1.02,
+      y: -5,
       transition: { 
-        duration: 0.3, 
-        ease: [0.25, 0.46, 0.45, 0.94]
-      }
-    },
-    hover: { 
-      scale: 1.03,
-      y: -12,
-      transition: { 
-        duration: 0.3, 
-        ease: [0.25, 0.46, 0.45, 0.94]
+        duration: 0.2, 
+        ease: "easeOut"
       }
     }
-  };
-
-  const imageVariants = {
-    rest: { 
-      scale: 1,
-      transition: { duration: 0.3, ease: "easeOut" }
-    },
-    hover: { 
-      scale: 1.1,
-      transition: { duration: 0.3, ease: "easeOut" }
-    }
-  };
-
-  const overlayVariants = {
-    rest: { 
-      opacity: 0,
-      transition: { duration: 0.2 }
-    },
-    hover: { 
-      opacity: 1,
-      transition: { duration: 0.2 }
-    }
-  };
-
-  const buttonVariants = {
-    rest: { scale: 1 },
-    hover: { 
-      scale: 1.1,
-      transition: { duration: 0.2, ease: "easeOut" }
-    },
-    tap: { 
-      scale: 0.95,
-      transition: { duration: 0.1 }
-    }
-  };
-
-  const tagVariants = {
-    rest: { 
-      scale: 1, 
-      y: 0,
-      transition: { duration: 0.2 }
-    },
-    hover: { 
-      scale: 1.05, 
-      y: -2,
-      transition: { duration: 0.2, ease: "easeOut" }
-    }
-  };
-
-  // Optimized particle animation
-  const particleVariants = {
-    animate: (i: number) => ({
-      y: [-30, -120],
-      opacity: [0, 0.8, 0],
-      scale: [0.5, 1, 0.5],
-      transition: {
-        duration: Math.random() * 3 + 2,
-        repeat: Infinity,
-        delay: i * 0.5,
-        ease: "easeInOut"
-      }
-    })
   };
 
   return (
-    <section className="py-20 px-6 relative min-h-screen overflow-hidden">
-      {/* Optimized Background */}
+    <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 relative min-h-screen overflow-hidden">
+      {/* Simplified Background */}
       <div className="absolute inset-0 w-full h-full">
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900/30 to-black"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-purple-900/20"></div>
+        
+        {/* Optional video background for larger screens only */}
         <video
           autoPlay
           loop
           muted
           playsInline
-          preload="metadata"
-          className="absolute w-full h-full object-cover opacity-10"
-          style={{ willChange: 'auto' }}
+          preload="none"
+          className="absolute w-full h-full object-cover opacity-5 hidden lg:block"
           onError={(e) => {
             e.currentTarget.style.display = 'none';
           }}
         >
           <source src="/bg1.mp4" type="video/mp4" />
-          <source src="/bg1.webm" type="video/webm" />
         </video>
-        
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900/30 to-black"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-purple-900/20"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/10 via-transparent to-purple-900/10"></div>
       </div>
 
       {/* Content */}
       <div className="max-w-7xl mx-auto relative z-10">
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-12 lg:mb-16"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.3, margin: "-50px" }}
-          style={{ willChange: 'transform, opacity' }}
+          viewport={{ once: true, amount: 0.3 }}
         >
           <motion.h2
             variants={itemVariants}
-            className="text-5xl md:text-6xl font-bold text-transparent bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text mb-6"
+            className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-transparent bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text mb-4 lg:mb-6"
           >
             Featured Projects
           </motion.h2>
           <motion.div
             variants={itemVariants}
-            className="w-20 h-1 bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 mx-auto mb-6 rounded-full shadow-lg shadow-purple-500/50"
+            className="w-16 sm:w-20 h-1 bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 mx-auto mb-4 lg:mb-6 rounded-full shadow-lg shadow-purple-500/50"
           ></motion.div>
           <motion.p
             variants={itemVariants}
-            className="text-lg text-cyan-100 max-w-2xl mx-auto leading-relaxed font-medium"
+            className="text-sm sm:text-base lg:text-lg text-cyan-100 max-w-2xl mx-auto leading-relaxed font-medium px-4"
           >
             A showcase of my recent work, demonstrating expertise in modern web technologies
             and creative problem-solving.
           </motion.p>
         </motion.div>
 
-        {/* Optimized Project cards */}
+        {/* Project cards */}
         <motion.div
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 lg:gap-12"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.1, margin: "-100px" }}
-          style={{ willChange: 'transform, opacity' }}
+          viewport={{ once: true, amount: 0.1 }}
         >
           {projects.map((project, index) => (
             <motion.div
@@ -235,72 +161,59 @@ const Projects: React.FC = () => {
                 initial="rest"
                 whileHover="hover"
                 animate="rest"
-                className="bg-black/80 backdrop-blur-md rounded-xl overflow-hidden border border-cyan-500/30 hover:border-cyan-400/70 transition-colors duration-300 shadow-xl shadow-black/50"
-                style={{ willChange: 'transform' }}
+                className="bg-black/80 backdrop-blur-sm rounded-xl overflow-hidden border border-cyan-500/30 hover:border-cyan-400/70 transition-colors duration-300 shadow-xl shadow-black/50 h-full"
               >
                 {/* Glow effect */}
                 <div className="absolute -inset-px bg-gradient-to-r from-cyan-500/40 via-purple-500/40 to-pink-500/40 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 
-                <div className="relative">
+                <div className="relative h-full flex flex-col">
                   <div className="relative overflow-hidden">
-                    <motion.img
+                    <img
                       src={project.image}
                       alt={project.title}
-                      className="w-full h-48 object-cover"
-                      variants={imageVariants}
+                      className="w-full h-40 sm:h-48 object-cover transition-transform duration-300 group-hover:scale-110"
                       loading="lazy"
-                      style={{ willChange: 'transform' }}
                     />
                     
                     {/* Hover overlay */}
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-t from-black/80 via-purple-900/30 to-transparent flex items-center justify-center"
-                      variants={overlayVariants}
-                    >
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-purple-900/30 to-transparent flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       <div className="flex gap-3">
                         <motion.a
                           href={project.github}
-                          className="w-12 h-12 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center text-white shadow-lg shadow-cyan-500/30"
-                          variants={buttonVariants}
-                          whileHover="hover"
-                          whileTap="tap"
-                          style={{ willChange: 'transform' }}
+                          className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center text-white shadow-lg shadow-cyan-500/30"
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.95 }}
                         >
-                          <Github size={20} />
+                          <Github size={16} />
                         </motion.a>
                         <motion.a
                           href={project.live}
-                          className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white shadow-lg shadow-purple-500/30"
-                          variants={buttonVariants}
-                          whileHover="hover"
-                          whileTap="tap"
-                          style={{ willChange: 'transform' }}
+                          className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white shadow-lg shadow-purple-500/30"
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.95 }}
                         >
-                          <ExternalLink size={20} />
+                          <ExternalLink size={16} />
                         </motion.a>
                       </div>
-                    </motion.div>
+                    </div>
                   </div>
                   
-                  <div className="p-6">
-                    <h3 className="text-lg font-bold bg-gradient-to-r from-cyan-200 via-purple-200 to-pink-200 bg-clip-text text-transparent mb-3 group-hover:from-cyan-100 group-hover:via-purple-100 group-hover:to-pink-100 transition-all duration-200">
+                  <div className="p-4 sm:p-6 flex-1 flex flex-col">
+                    <h3 className="text-base sm:text-lg font-bold bg-gradient-to-r from-cyan-200 via-purple-200 to-pink-200 bg-clip-text text-transparent mb-2 sm:mb-3 group-hover:from-cyan-100 group-hover:via-purple-100 group-hover:to-pink-100 transition-all duration-200">
                       {project.title}
                     </h3>
-                    <p className="text-transparent bg-gradient-to-r from-gray-100 to-gray-300 bg-clip-text mb-4 leading-relaxed text-sm font-medium">
+                    <p className="text-transparent bg-gradient-to-r from-gray-100 to-gray-300 bg-clip-text mb-3 sm:mb-4 leading-relaxed text-xs sm:text-sm font-medium flex-1">
                       {project.description}
                     </p>
                     
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-1.5 sm:gap-2">
                       {project.tags.map((tag, tagIndex) => (
-                        <motion.span
+                        <span
                           key={tagIndex}
-                          className={`px-3 py-1.5 bg-gradient-to-r ${tag.color} text-white text-xs rounded-lg font-bold border border-white/20 shadow-lg`}
-                          variants={tagVariants}
-                          whileHover="hover"
-                          style={{ willChange: 'transform' }}
+                          className={`px-2 sm:px-3 py-1 sm:py-1.5 bg-gradient-to-r ${tag.color} text-white text-xs rounded-lg font-bold border border-white/20 shadow-sm hover:shadow-md transition-shadow duration-200`}
                         >
                           {tag.name}
-                        </motion.span>
+                        </span>
                       ))}
                     </div>
                   </div>
@@ -311,20 +224,27 @@ const Projects: React.FC = () => {
         </motion.div>
       </div>
 
-      {/* Optimized floating particles */}
-      <div className="absolute inset-0 pointer-events-none">
-        {[...Array(8)].map((_, i) => (
+      {/* Simplified floating particles for larger screens only */}
+      <div className="absolute inset-0 pointer-events-none hidden lg:block">
+        {[...Array(6)].map((_, i) => (
           <motion.div
             key={i}
             className="absolute w-1 h-1 bg-cyan-400/60 rounded-full"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
-              willChange: 'transform, opacity'
             }}
-            variants={particleVariants}
-            animate="animate"
-            custom={i}
+            animate={{
+              y: [-20, -60],
+              opacity: [0, 0.8, 0],
+              scale: [0.5, 1, 0.5],
+              transition: {
+                duration: Math.random() * 3 + 2,
+                repeat: Infinity,
+                delay: i * 0.5,
+                ease: "easeInOut"
+              }
+            }}
           />
         ))}
       </div>
