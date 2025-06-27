@@ -178,7 +178,7 @@ const About: React.FC = () => {
               <motion.div variants={itemVariants} className="space-y-3 lg:space-y-4 text-gray-300 text-sm sm:text-base lg:text-lg leading-relaxed">
                 <p>
                   I'm a <span className="text-white font-semibold">Graduate Research Assistant</span> at Binghamton University 
-                  and experienced <span className="text-white font-semibold">Full Stack Developer</span> with 3+ years 
+                  and experienced <span className="text-white font-semibold">Full Stack Developer</span> with 4+ years 
                   at DXC Technology. Currently pursuing my MS in Computer Science with focus on AI/ML and systems programming.
                 </p>
                 
