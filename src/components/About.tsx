@@ -231,7 +231,7 @@ const About: React.FC = () => {
               className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-6 lg:pt-8"
             >
               <motion.a
-                href="https://drive.google.com/file/d/1r4yhzlE0SEmg5dBbjG0xtSVCnlK9YCzi/view?usp=sharing"
+                href="https://drive.google.com/file/d/1r4yhzlE0SEmg5dBbjG0xtSVCnlK9YCzi/view?usp=drive_link"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-white text-black px-6 py-3 rounded-full font-medium hover:bg-gray-200 transition-colors duration-300 text-center text-sm sm:text-base"
