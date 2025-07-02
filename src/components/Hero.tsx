@@ -65,7 +65,7 @@ const Hero: React.FC = () => {
             className="bg-white text-black px-8 py-4 rounded-full font-semibold hover:bg-gray-200 transition-all duration-300 flex items-center gap-2"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            href="https://drive.google.com/file/d/1r4yhzlE0SEmg5dBbjG0xtSVCnlK9YCzi/view?usp=drive_link"
+            href="https://drive.google.com/file/d/1WgvhQqjqrwCX85lJdn6QrCkilpT9J8z7/view?usp=drive_link"
             target="_blank"
             rel="noopener noreferrer"
           >
